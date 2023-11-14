@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/balance_background"
+    android:gravity="center"
+    >
+
+    <ImageView
+        android:id="@+id/ivCoin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/coin_balance"
+        />
+    <TextView
+        android:id="@+id/tvBalance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="17dp"
+        android:text="999"
+        android:textStyle="bold"
+        android:paddingEnd="15dp"
+        />
+
+</LinearLayout>
