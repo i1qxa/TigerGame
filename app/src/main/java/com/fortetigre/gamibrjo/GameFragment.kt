@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.lifecycle.lifecycleScope
 import com.fortetigre.gamibrjo.databinding.FragmentGameBinding
 import kotlinx.coroutines.delay
@@ -61,7 +60,7 @@ class GameFragment : Fragment() {
 
     private fun setupRandomCrystal() {
         isAnimationActive = false
-        val img = R.drawable.crystal_blue
+        val img = R.drawable.crystal_grey
         ivCrystal.setImageDrawable(requireContext().getDrawable(img))
         ivCrystal.rotation = (Random.nextFloat()) * 100
         var randomScale = (Random.nextDouble(2.0)).toFloat()

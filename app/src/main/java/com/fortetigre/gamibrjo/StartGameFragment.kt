@@ -35,6 +35,13 @@ class StartGameFragment : Fragment() {
                 .addToBackStack(null)
                 .commit()
         }
+        binding.btnShop.setOnClickListener {
+            parentFragmentManager.beginTransaction().apply {
+                replace(R.id.mainContainer, ShopGameFragment())
+                addToBackStack(null)
+                commit()
+            }
+        }
     }
 
     private fun observeBalance(){

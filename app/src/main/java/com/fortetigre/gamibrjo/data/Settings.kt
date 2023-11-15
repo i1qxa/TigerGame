@@ -6,4 +6,6 @@ class Settings {
 
     var isTimer:Boolean = false
 
+    var chosenChest:Int = 1
+
 }
