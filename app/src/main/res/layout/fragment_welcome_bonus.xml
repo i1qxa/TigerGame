@@ -34,14 +34,14 @@
         />
 
     <ImageView
-        android:id="@+id/ivTigerText"
+        android:id="@+id/bonus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/balance"
-        app:layout_constraintBottom_toTopOf="@id/btnPlay"
-        android:src="@drawable/tiger_text"
+        android:src="@drawable/bonus"
+        android:paddingTop="30dp"
         />
 
     <ImageView
@@ -63,34 +63,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageView
-        android:id="@+id/btnPlay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:src="@drawable/btn_play"
-        app:layout_constraintBottom_toTopOf="@id/ivTiger"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageView
-        android:id="@+id/btnSettings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
-        android:src="@drawable/btn_settings"
-        app:layout_constraintBottom_toBottomOf="@id/btnPlay"
-        app:layout_constraintEnd_toStartOf="@id/btnPlay"
-        app:layout_constraintTop_toTopOf="@id/btnPlay" />
-
-    <ImageView
-        android:id="@+id/btnShop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
-        android:src="@drawable/btn_shop"
-        app:layout_constraintBottom_toBottomOf="@id/btnPlay"
-        app:layout_constraintStart_toEndOf="@id/btnPlay"
-        app:layout_constraintTop_toTopOf="@id/btnPlay" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,11 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.fortetigre.gamibrjo.data.CommonInfo
-import com.fortetigre.gamibrjo.databinding.FragmentStartGameBinding
+import com.fortetigre.gamibrjo.databinding.FragmentWelcomeBonusBinding
 
-class StartGameFragment : Fragment() {
+class WelcomeBonusFragment : Fragment() {
 
-    private val binding by lazy { FragmentStartGameBinding.inflate(layoutInflater) }
+    private val binding by lazy { FragmentWelcomeBonusBinding.inflate(layoutInflater) }
+    private val commonInfo by lazy { CommonInfo }
     private val tvBalance by lazy { binding.balance.tvBalance }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,24 +26,16 @@ class StartGameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeBalance()
-        setupBtnClickListeners()
-    }
-
-    private fun setupBtnClickListeners(){
-        binding.btnSettings.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.mainContainer, SettingsGameFragment())
-                .addToBackStack(null)
-                .commit()
-        }
+        setupBonusClickListener()
     }
 
     private fun observeBalance(){
-        CommonInfo.balanceLD.observe(viewLifecycleOwner){
+        makeGradientText()
+        commonInfo.balanceLD.observe(viewLifecycleOwner){
             tvBalance.text = it.toString()
         }
-        makeGradientText()
     }
+
     private fun makeGradientText(){
         val paint = tvBalance.paint
         val height = paint.measureText(tvBalance.text.toString())
@@ -53,4 +46,15 @@ class StartGameFragment : Fragment() {
 
         tvBalance.paint.setShader(textShader)
     }
+
+    private fun setupBonusClickListener(){
+        binding.bonus.setOnClickListener {
+            CommonInfo.increaseBalance(1000)
+            parentFragmentManager.beginTransaction().apply {
+                replace(R.id.mainContainer, StartGameFragment())
+                commit()
+            }
+        }
+    }
+
 }

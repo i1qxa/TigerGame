@@ -1,30 +1,41 @@
 package com.fortetigre.gamibrjo
 
-import android.graphics.Color
-import android.graphics.LinearGradient
-import android.graphics.Shader
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.fortetigre.gamibrjo.data.CommonInfo
+import com.fortetigre.gamibrjo.data.Settings
 import com.fortetigre.gamibrjo.databinding.ActivityMainBinding
 
+const val TIGER_PREFS = "tiger_prefs"
+const val IS_SOUND = "is_sound"
+const val IS_TIMER = "is_timer"
+const val IS_FIRST_LAUNCH = "is_first_launch"
+const val BALANCE = "balance"
 class MainActivity : AppCompatActivity() {
 
     private val viewModel by lazy { ViewModelProvider(this)[MainViewModel::class.java] }
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    private val tvTest by lazy { binding.tvTest }
-
+    private val prefs by lazy { this.getSharedPreferences(TIGER_PREFS, Context.MODE_PRIVATE) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        val paint = tvTest.paint
-        val height = paint.measureText(tvTest.text.toString())
-        val textShader: Shader = LinearGradient(50f, 0f, height, tvTest.textSize, intArrayOf(
-            Color.parseColor("#F9AA2C"),
-            Color.parseColor("#BC1F1C"),
-        ), null, Shader.TileMode.REPEAT)
+        initCommonInfo()
+    }
 
-        tvTest.paint.setShader(textShader)
+    private fun initCommonInfo(){
+        val commonInfo = CommonInfo
+        commonInfo.setupPrefs(prefs)
+        val isFirstLaunch = prefs.getBoolean(IS_FIRST_LAUNCH, true)
+        if (isFirstLaunch){
+            supportFragmentManager.beginTransaction().apply {
+                replace(R.id.mainContainer, WelcomeBonusFragment())
+                commit()
+            }
+            prefs.edit().putBoolean(IS_FIRST_LAUNCH, false).apply()
+        }
     }
 
 }

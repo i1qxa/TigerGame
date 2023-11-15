@@ -12,6 +12,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/coin_balance"
+        android:scaleType="centerInside"
+        android:paddingStart="5dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         />
     <TextView
         android:id="@+id/tvBalance"
@@ -20,7 +24,8 @@
         android:textSize="17dp"
         android:text="999"
         android:textStyle="bold"
-        android:paddingEnd="15dp"
+        android:paddingEnd="5dp"
+        android:paddingStart="5dp"
         />
 
 </LinearLayout>
