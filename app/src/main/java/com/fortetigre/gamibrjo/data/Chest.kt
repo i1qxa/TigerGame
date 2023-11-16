@@ -1,4 +1,9 @@
 package com.fortetigre.gamibrjo.data
 
-class Chest(name:String, isChosen:Boolean, isBuying:Boolean) {
-}
+class Chest(
+   val chestNum:Int,
+   val isChosen:Boolean,
+   val isBuying:Boolean,
+   val chestImg:Int,
+   val btnImg:Int,
+)
