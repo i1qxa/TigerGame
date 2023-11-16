@@ -9,12 +9,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.fortetigre.gamibrjo.data.CommonInfo
+import com.fortetigre.gamibrjo.data.db.AppDatabase
 import com.fortetigre.gamibrjo.databinding.FragmentStartGameBinding
 
 class StartGameFragment : Fragment() {
 
     private val binding by lazy { FragmentStartGameBinding.inflate(layoutInflater) }
     private val tvBalance by lazy { binding.balance.tvBalance }
+    private val balanceDao by lazy { AppDatabase.getInstance(requireActivity().application).BalanceDao() }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -45,10 +47,10 @@ class StartGameFragment : Fragment() {
     }
 
     private fun observeBalance(){
-        CommonInfo.balanceLD.observe(viewLifecycleOwner){
+        makeGradientText()
+        balanceDao.getBalanceLD().observe(viewLifecycleOwner){
             tvBalance.text = it.toString()
         }
-        makeGradientText()
     }
     private fun makeGradientText(){
         val paint = tvBalance.paint
