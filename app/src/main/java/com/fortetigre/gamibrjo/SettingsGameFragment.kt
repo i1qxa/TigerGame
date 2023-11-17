@@ -9,12 +9,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.fortetigre.gamibrjo.data.CommonInfo
+import com.fortetigre.gamibrjo.data.Settings
 import com.fortetigre.gamibrjo.data.db.AppDatabase
-import com.fortetigre.gamibrjo.databinding.FragmentStartGameBinding
+import com.fortetigre.gamibrjo.databinding.FragmentSettingsGameBinding
 
-class StartGameFragment : Fragment() {
+class SettingsGameFragment : Fragment() {
 
-    private val binding by lazy { FragmentStartGameBinding.inflate(layoutInflater) }
+    private val binding by lazy { FragmentSettingsGameBinding.inflate(layoutInflater) }
+    private val commonInfo by lazy { CommonInfo }
     private val tvBalance by lazy { binding.balance.tvBalance }
     private val balanceDao by lazy { AppDatabase.getInstance(requireActivity().application).BalanceDao() }
     override fun onCreateView(
@@ -26,23 +28,23 @@ class StartGameFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initSettings()
+        setupBtnYesClickListener()
         observeBalance()
-        setupBtnClickListeners()
     }
 
-    private fun setupBtnClickListeners(){
-        binding.btnSettings.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.mainContainer, SettingsGameFragment())
-                .addToBackStack(null)
-                .commit()
-        }
-        binding.btnShop.setOnClickListener {
-            parentFragmentManager.beginTransaction().apply {
-                replace(R.id.mainContainer, ShopGameFragment())
-                addToBackStack(null)
-                commit()
-            }
+    private fun initSettings(){
+        if (commonInfo.settings.isSound) binding.swSound.isChecked = true
+        if (commonInfo.settings.isTimer) binding.swTimer.isChecked = true
+    }
+
+    private fun setupBtnYesClickListener(){
+        binding.btnYes.setOnClickListener {
+            val settings = Settings()
+            settings.isSound = binding.swSound.isChecked
+            settings.isTimer = binding.swTimer.isChecked
+            commonInfo.changeSettings(settings)
+            parentFragmentManager.popBackStack()
         }
     }
 
@@ -51,7 +53,11 @@ class StartGameFragment : Fragment() {
         balanceDao.getBalanceLD().observe(viewLifecycleOwner){
             tvBalance.text = it.toString()
         }
+//        commonInfo.balanceLD.observe(viewLifecycleOwner){
+//            tvBalance.text = it.toString()
+//        }
     }
+
     private fun makeGradientText(){
         val paint = tvBalance.paint
         val height = paint.measureText(tvBalance.text.toString())
@@ -62,4 +68,5 @@ class StartGameFragment : Fragment() {
 
         tvBalance.paint.setShader(textShader)
     }
+
 }
