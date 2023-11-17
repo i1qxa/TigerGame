@@ -1,7 +1,9 @@
 package com.fortetigre.gamibrjo.data.db
 
+import com.fortetigre.gamibrjo.R
+
 enum class BtnTypes(val btnId:Int) {
-    BUY(2131165439),
-    CHOSE(2131165447),
-    CHOSEN(2131165448),
+    BUY(R.drawable.buy_btn),
+    CHOSE(R.drawable.choose_btn),
+    CHOSEN(R.drawable.choosen_btn),
 }

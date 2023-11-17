@@ -15,6 +15,9 @@ interface ChestDao {
     @Query("SELECT * FROM ChestDB")
     fun getLDChestItems():LiveData<List<ChestDB>>
 
+    @Query("SELECT crystalId FROM CHESTDB WHERE isChosen = 1 limit 1")
+    suspend fun getChosenChestCrystal():Int
+
     @Query("SELECT * FROM ChestDB WHERE name !=:chosen")
     suspend fun getChestListToCancelChosen(chosen:String):List<ChestDB>
 

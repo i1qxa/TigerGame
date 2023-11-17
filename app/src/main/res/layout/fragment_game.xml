@@ -14,6 +14,49 @@
         android:scaleType="centerCrop"
         />
 
+    <ImageView
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:src="@drawable/back_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/balance"
+        layout="@layout/balance_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/progres_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/sandWatches"
+        app:layout_constraintBottom_toBottomOf="@id/sandWatches"
+        android:paddingHorizontal="15dp"
+        android:paddingTop="15dp"
+        />
+
+    <ImageView
+        android:id="@+id/sandWatches"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/sand_watches"
+        app:layout_constraintEnd_toEndOf="@id/progressBar"
+        app:layout_constraintTop_toTopOf="@id/topLine"
+        app:layout_constraintBottom_toBottomOf="@id/topLine"
+        android:paddingEnd="20dp"
+        />
+
 
     <ImageView
         android:id="@+id/bottomChest"
@@ -36,8 +79,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.6"
-        />
+        app:layout_constraintGuide_begin="439dp" />
 
     <ImageView
         android:id="@+id/ivCrystal"

@@ -44,6 +44,13 @@ class StartGameFragment : Fragment() {
                 commit()
             }
         }
+        binding.btnPlay.setOnClickListener {
+            parentFragmentManager.beginTransaction().apply {
+                replace(R.id.mainContainer, GameFragment())
+                addToBackStack(null)
+                commit()
+            }
+        }
     }
 
     private fun observeBalance(){
@@ -59,7 +66,6 @@ class StartGameFragment : Fragment() {
             Color.parseColor("#F9AA2C"),
             Color.parseColor("#BC1F1C"),
         ), null, Shader.TileMode.REPEAT)
-
         tvBalance.paint.setShader(textShader)
     }
 }

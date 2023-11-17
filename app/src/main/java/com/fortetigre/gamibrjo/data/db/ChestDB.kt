@@ -12,6 +12,7 @@ data class ChestDB(
     val chestImgBuying:Int,
     val chestImgNotBuying:Int,
     val price:Int,
+    val crystalId:Int,
 ){
     fun getChestImgId()=if (isBuying) chestImgBuying else chestImgNotBuying
 
@@ -25,11 +26,11 @@ data class ChestDB(
     fun btnClicked():ChestDB?{
         if (isBuying){
             if (isChosen) return null
-            else return ChestDB(id,name,true,isBuying,chestImgBuying, chestImgNotBuying, price)
-        }else return ChestDB(id,name, false, true, chestImgBuying, chestImgNotBuying, price)
+            else return ChestDB(id,name,true,isBuying,chestImgBuying, chestImgNotBuying, price, crystalId)
+        }else return ChestDB(id,name, false, true, chestImgBuying, chestImgNotBuying, price, crystalId)
     }
 
     fun cancelChosen():ChestDB{
-        return ChestDB(id,name,false,isBuying,chestImgBuying, chestImgNotBuying,price)
+        return ChestDB(id,name,false,isBuying,chestImgBuying, chestImgNotBuying,price, crystalId)
     }
 }

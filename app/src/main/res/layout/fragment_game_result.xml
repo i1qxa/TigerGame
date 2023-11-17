@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".GameResultFragment">
+
+    <ImageView
+        android:id="@+id/mainBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/main_background" />
+
+    <ImageView
+        android:id="@+id/ivTiger"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/tiger_bottom_img"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/middleLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5"
+        />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/middleVerticalLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5"
+        />
+
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/ramka_background"
+        app:layout_constraintStart_toStartOf="@id/tvRewardHeader"
+        app:layout_constraintEnd_toEndOf="@id/tvTimeValue"
+        app:layout_constraintTop_toTopOf="@id/tvTimeHeader"
+        app:layout_constraintBottom_toBottomOf="@id/tvRewardValue"
+        />
+
+    <TextView
+        android:id="@+id/tvRewardHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@id/middleVerticalLine"
+        app:layout_constraintBottom_toBottomOf="@id/middleLine"
+        android:text="@string/reward"
+        android:textSize="18dp"
+        android:textColor="#D23F46"
+        android:fontFamily="@font/benzinbold"
+        android:paddingStart="20dp"
+        />
+
+    <TextView
+        android:id="@+id/tvTimeHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@id/middleVerticalLine"
+        app:layout_constraintBottom_toTopOf="@id/tvRewardHeader"
+        android:text="@string/time"
+        android:textSize="18dp"
+        android:textColor="#D23F46"
+        android:fontFamily="@font/benzinbold"
+        android:paddingTop="20dp"
+        />
+    <ImageView
+        android:id="@+id/ivCoin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/coin_balance"
+        app:layout_constraintBottom_toBottomOf="@id/tvRewardHeader"
+        app:layout_constraintTop_toTopOf="@id/tvRewardHeader"
+        app:layout_constraintStart_toEndOf="@id/tvRewardHeader"
+        />
+    <TextView
+        android:id="@+id/tvRewardValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/benzinbold"
+        android:textSize="22dp"
+        android:textColor="#252525"
+        android:text="120"
+        app:layout_constraintStart_toEndOf="@id/ivCoin"
+        app:layout_constraintTop_toTopOf="@id/tvRewardHeader"
+        app:layout_constraintBottom_toBottomOf="@id/tvRewardHeader"
+        />
+    <TextView
+        android:id="@+id/tvTimeValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/benzinbold"
+        android:textSize="22dp"
+        android:textColor="#252525"
+        android:text="00:30"
+        app:layout_constraintStart_toEndOf="@id/tvTimeHeader"
+        app:layout_constraintTop_toTopOf="@id/tvTimeHeader"
+        app:layout_constraintBottom_toBottomOf="@id/tvTimeHeader"
+        />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

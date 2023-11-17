@@ -53,13 +53,13 @@ class MainActivity : AppCompatActivity() {
     private fun initChest(){
         lifecycleScope.launch(Dispatchers.IO) {
             if (chestDao.getChestList().size<=1){
-                val greyChest = ChestDB(0,"GREY",true,true,R.drawable.chest_grey,R.drawable.chest_grey,0)
+                val greyChest = ChestDB(0,"GREY",true,true,R.drawable.chest_grey,R.drawable.chest_grey,0, R.drawable.crystal_grey)
                 chestDao.addChest(greyChest)
-                val blueChest = ChestDB(0,"BLUE",false,false,R.drawable.chest_blue,R.drawable.chest_grey_buy, 500)
+                val blueChest = ChestDB(0,"BLUE",false,false,R.drawable.chest_blue,R.drawable.chest_grey_buy, 500, R.drawable.crystal_blue)
                 chestDao.addChest(blueChest)
-                val redChest = ChestDB(0,"RED",false,false,R.drawable.chest_red,R.drawable.chest_red_buy,1000)
+                val redChest = ChestDB(0,"RED",false,false,R.drawable.chest_red,R.drawable.chest_red_buy,1000, R.drawable.crystal_red)
                 chestDao.addChest(redChest)
-                val greenChest = ChestDB(0,"GREEN",false,false,R.drawable.chest_green,R.drawable.chest_green_buy,1500)
+                val greenChest = ChestDB(0,"GREEN",false,false,R.drawable.chest_green,R.drawable.chest_green_buy,1500, R.drawable.crystal_green)
                 chestDao.addChest(greenChest)
             }
         }
