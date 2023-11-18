@@ -5,7 +5,6 @@ import android.graphics.LinearGradient
 import android.graphics.Shader
 import android.icu.util.Calendar
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.lifecycle.lifecycleScope
 import com.fortetigre.gamibrjo.data.CommonInfo
+import com.fortetigre.gamibrjo.data.Time
 import com.fortetigre.gamibrjo.data.db.AppDatabase
 import com.fortetigre.gamibrjo.data.db.BalanceDB
 import com.fortetigre.gamibrjo.databinding.FragmentGameBinding
@@ -20,19 +20,18 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlin.properties.Delegates
 import kotlin.random.Random
 
 class GameFragment : Fragment() {
 
     private val binding by lazy { FragmentGameBinding.inflate(layoutInflater) }
-    private val xStart by lazy { binding.topLine.x }
-    private val xEnd by lazy { xStart + (binding.mainBackground.width).toFloat() }
-    private val yStart by lazy { binding.topLine.y }
-    private val yEnd by lazy { binding.bottomLine.y }
-    private val xFailure by lazy { ((binding.bottomChest).width / 2).toFloat() }
-    private val yFailure by lazy { binding.bottomChest.y + binding.bottomChest.height }
-    private val ivCrystal by lazy { binding.ivCrystal }
+
+    //    private val xStart by lazy { binding.topLine.x }
+//    private val xEnd by lazy { xStart + (binding.mainBackground.width).toFloat() }
+//    private val yStart by lazy { binding.topLine.y }
+//    private val yEnd by lazy { binding.bottomLine.y }
+//    private val xFailure by lazy { ((binding.bottomChest).width / 2).toFloat() }
+//    private val yFailure by lazy { binding.bottomChest.y + binding.bottomChest.height }
     private var isAnimationActive = false
     private val chestDao by lazy {
         AppDatabase.getInstance(requireActivity().application).ChestDao()
@@ -43,8 +42,8 @@ class GameFragment : Fragment() {
     private val tvBalance by lazy { binding.balance.tvBalance }
     private var isCrystalAttached = false
     private val progress by lazy { binding.progressBar }
-    private var crystalId =0
-    private val startTimeInMills by lazy { Calendar.getInstance().timeInMillis }
+    private var crystalId = 0
+    private var startTime: Time = Time(1, 1)
     private var startBalance = 0
 
 
@@ -62,6 +61,8 @@ class GameFragment : Fragment() {
             startBalance = balanceDao.getCurrentBalanceValue()
             delay(1000)
             createCrystalView()
+            val startCalendar = Calendar.getInstance()
+            startTime = Time(startCalendar.time.minutes, startCalendar.time.seconds)
             launchTimer()
         }
         observeBalance()
@@ -69,7 +70,9 @@ class GameFragment : Fragment() {
     }
 
     private fun launchTimer() {
-        if (CommonInfo.settings.isTimer){
+        if (CommonInfo.settings.isTimer) {
+            progress.visibility = View.VISIBLE
+            binding.sandWatches.visibility = View.VISIBLE
             progress.max = 30
             var counter = 0
             lifecycleScope.launch {
@@ -77,33 +80,39 @@ class GameFragment : Fragment() {
                     delay(1000)
                     counter++
                     progress.setProgress(counter, true)
-                    if (counter==30) launchResult()
+                    if (counter == 30) launchResult()
                 }
             }
-        }else{
+        } else {
             progress.visibility = View.GONE
             binding.sandWatches.visibility = View.GONE
         }
 
     }
 
-    private fun launchResult(){
-        val endTimeInMils = Calendar.getInstance().timeInMillis
-        val gameTimeInSeconds = ((endTimeInMils +1000 - startTimeInMills)/1000).toInt()
-        var endBalance = 0
+    private fun launchResult() {
+        val endCalendar = Calendar.getInstance()
+        val endTime = Time(endCalendar.time.minutes, endCalendar.time.seconds)
+        val gameDuration = Time(
+            (endTime.minutes - startTime.minutes),
+            (endTime.seconds - startTime.seconds)
+        ).getString()
         lifecycleScope.launch {
-            endBalance = balanceDao.getCurrentBalanceValue()
+            var endBalance = balanceDao.getCurrentBalanceValue()
+            withContext(Dispatchers.Main) {
+                val gameResult = endBalance - startBalance
+                val gameResultFragment = GameResultFragment.newInstance(gameDuration, gameResult)
+                parentFragmentManager.beginTransaction().apply {
+                    replace(R.id.mainContainer, gameResultFragment)
+                    addToBackStack(null)
+                    commit()
+                }
+            }
         }
-        val gameResult = endBalance - startBalance
-        val gameResultFragment = GameResultFragment.newInstance(gameTimeInSeconds, gameResult)
-        parentFragmentManager.beginTransaction().apply {
-            replace(R.id.mainContainer, gameResultFragment)
-            addToBackStack(null)
-            commit()
-        }
+
     }
 
-    private fun setupBtnBackClickListener(){
+    private fun setupBtnBackClickListener() {
         binding.btnBack.setOnClickListener {
             launchResult()
         }
@@ -137,10 +146,10 @@ class GameFragment : Fragment() {
         crystal.scaleX = randomScale
         crystal.scaleY = randomScale
         val limitY = binding.balance.root.height + crystal.height
-        val randomX = (Random.nextInt(xEnd.toInt() - ivCrystal.width)).toFloat()
-        val randomY = (Random.nextInt(yEnd.toInt() - limitY)).toFloat()
+        val randomX = (Random.nextInt(binding.mainBackground.width - crystal.width)).toFloat()
+        val randomY = Random.nextInt(binding.bottomLine.y.toInt()).toFloat()
         crystal.x = randomX
-        crystal.y = randomY
+        crystal.y = if (randomY> binding.topLine.y) randomY else (binding.topLine.y + crystal.height.toFloat())
         crystal.visibility = View.VISIBLE
         if (!isCrystalAttached) {
             binding.root.addView(crystal)
@@ -183,6 +192,8 @@ class GameFragment : Fragment() {
     }
 
     private fun launchFailureAnim(crystalView: ImageView) {
+        val xFailure = ((binding.bottomChest).width / 2).toFloat()
+        val yFailure = binding.bottomChest.y + binding.bottomChest.height
         isAnimationActive = true
         crystalView.animate().apply {
             duration = 500

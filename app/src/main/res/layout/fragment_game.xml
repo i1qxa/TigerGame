@@ -44,6 +44,7 @@
         app:layout_constraintBottom_toBottomOf="@id/sandWatches"
         android:paddingHorizontal="15dp"
         android:paddingTop="15dp"
+        android:visibility="gone"
         />
 
     <ImageView
@@ -55,6 +56,7 @@
         app:layout_constraintTop_toTopOf="@id/topLine"
         app:layout_constraintBottom_toBottomOf="@id/topLine"
         android:paddingEnd="20dp"
+        android:visibility="gone"
         />
 
 
@@ -81,12 +83,5 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="439dp" />
 
-    <ImageView
-        android:id="@+id/ivCrystal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

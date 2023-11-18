@@ -11,7 +11,7 @@ private const val GAME_TIME = "game_time"
 private const val GAME_RESULT = "game_result"
 
 class GameResultFragment : Fragment() {
-    private var gameTime: Int? = null
+    private var gameTime: String? = null
     private var gameResult: Int? = null
 
     private val binding by lazy { FragmentGameResultBinding.inflate(layoutInflater) }
@@ -19,7 +19,7 @@ class GameResultFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            gameTime = it.getInt(GAME_TIME)
+            gameTime = it.getString(GAME_TIME)
             gameResult = it.getInt(GAME_RESULT)
         }
     }
@@ -62,7 +62,7 @@ class GameResultFragment : Fragment() {
                 commit()
             }
         }
-        binding.tvTimeValue.text = convertSecondsToMinutes(gameTime?:10)
+        binding.tvTimeValue.text = gameTime
         binding.tvRewardValue.text = gameResult?.toString()?:"0"
     }
 
@@ -90,10 +90,10 @@ class GameResultFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(gameTime: Int, gameResult: Int) =
+        fun newInstance(gameTime: String, gameResult: Int) =
             GameResultFragment().apply {
                 arguments = Bundle().apply {
-                    putInt(GAME_TIME, gameTime)
+                    putString(GAME_TIME, gameTime)
                     putInt(GAME_RESULT, gameResult)
                 }
             }
