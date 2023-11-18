@@ -13,6 +13,7 @@
         android:scaleType="centerCrop"
         android:src="@drawable/main_background" />
 
+
     <ImageView
         android:id="@+id/ivTiger"
         android:layout_width="0dp"
@@ -43,45 +44,40 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:src="@drawable/ramka_background"
-        app:layout_constraintStart_toStartOf="@id/tvRewardHeader"
+        app:layout_constraintStart_toStartOf="@id/ivRewardHeader"
         app:layout_constraintEnd_toEndOf="@id/tvTimeValue"
-        app:layout_constraintTop_toTopOf="@id/tvTimeHeader"
+        app:layout_constraintTop_toTopOf="@id/ivTimeHeader"
         app:layout_constraintBottom_toBottomOf="@id/tvRewardValue"
         />
 
-    <TextView
-        android:id="@+id/tvRewardHeader"
+    <ImageView
+        android:id="@+id/ivRewardHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="@id/middleVerticalLine"
         app:layout_constraintBottom_toBottomOf="@id/middleLine"
-        android:text="@string/reward"
-        android:textSize="18dp"
-        android:textColor="#D23F46"
-        android:fontFamily="@font/benzinbold"
+        android:src="@drawable/text_rewars"
         android:paddingStart="20dp"
         />
 
-    <TextView
-        android:id="@+id/tvTimeHeader"
+    <ImageView
+        android:id="@+id/ivTimeHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/middleVerticalLine"
-        app:layout_constraintBottom_toTopOf="@id/tvRewardHeader"
-        android:text="@string/time"
-        android:textSize="18dp"
-        android:textColor="#D23F46"
-        android:fontFamily="@font/benzinbold"
-        android:paddingTop="20dp"
-        />
+        android:src="@drawable/text_time"
+        app:layout_constraintBottom_toTopOf="@id/ivRewardHeader"
+        app:layout_constraintEnd_toStartOf="@id/middleVerticalLine"
+        app:layout_constraintHorizontal_bias="0.323"
+        app:layout_constraintStart_toStartOf="@id/ivRewardHeader" />
+
     <ImageView
         android:id="@+id/ivCoin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/coin_balance"
-        app:layout_constraintBottom_toBottomOf="@id/tvRewardHeader"
-        app:layout_constraintTop_toTopOf="@id/tvRewardHeader"
-        app:layout_constraintStart_toEndOf="@id/tvRewardHeader"
+        app:layout_constraintBottom_toBottomOf="@id/ivRewardHeader"
+        app:layout_constraintTop_toTopOf="@id/ivRewardHeader"
+        app:layout_constraintEnd_toStartOf="@id/tvRewardValue"
         />
     <TextView
         android:id="@+id/tvRewardValue"
@@ -91,9 +87,9 @@
         android:textSize="22dp"
         android:textColor="#252525"
         android:text="120"
-        app:layout_constraintStart_toEndOf="@id/ivCoin"
-        app:layout_constraintTop_toTopOf="@id/tvRewardHeader"
-        app:layout_constraintBottom_toBottomOf="@id/tvRewardHeader"
+        app:layout_constraintEnd_toEndOf="@id/tvTimeValue"
+        app:layout_constraintTop_toTopOf="@id/ivRewardHeader"
+        app:layout_constraintBottom_toBottomOf="@id/ivRewardHeader"
         />
     <TextView
         android:id="@+id/tvTimeValue"
@@ -103,9 +99,17 @@
         android:textSize="22dp"
         android:textColor="#252525"
         android:text="00:30"
-        app:layout_constraintStart_toEndOf="@id/tvTimeHeader"
-        app:layout_constraintTop_toTopOf="@id/tvTimeHeader"
-        app:layout_constraintBottom_toBottomOf="@id/tvTimeHeader"
+        app:layout_constraintStart_toEndOf="@id/middleVerticalLine"
+        app:layout_constraintTop_toTopOf="@id/ivTimeHeader"
+        app:layout_constraintBottom_toBottomOf="@id/ivTimeHeader"
+        />
+    <ImageView
+        android:id="@+id/btnHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/btn_home"
+        app:layout_constraintEnd_toStartOf="@id/middleVerticalLine"
+        app:layout_constraintTop_toBottomOf="@id/middleLine"
         />
 
 
