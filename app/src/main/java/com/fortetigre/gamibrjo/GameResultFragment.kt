@@ -31,6 +31,63 @@ class GameResultFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupResult()
+        setupBtnClickListeners()
+    }
+
+    private fun setupBtnClickListeners(){
+        binding.btnHome.setOnClickListener {
+            parentFragmentManager.beginTransaction().apply {
+                replace(R.id.mainContainer, StartGameFragment())
+                commit()
+            }
+        }
+        binding.btnReplay.setOnClickListener {
+            parentFragmentManager.beginTransaction().apply {
+                replace(R.id.mainContainer, GameFragment())
+                commit()
+            }
+        }
+    }
+
+    private fun setupResult(){
+        if (gameResult!=null && gameTime!=null){
+            if (gameResult!!>0)setupWinRes()
+            else setupLoseRes()
+        }else{
+            parentFragmentManager.beginTransaction().apply {
+                replace(R.id.mainContainer, StartGameFragment())
+                commit()
+            }
+        }
+        binding.tvTimeValue.text = convertSecondsToMinutes(gameTime?:10)
+        binding.tvRewardValue.text = gameResult?.toString()?:"0"
+    }
+
+    private fun convertSecondsToMinutes(seconds:Int):String{
+        return if (seconds in 10..59) "00:$seconds"
+        else if (seconds<10) "00:0$seconds"
+        else{
+            var minutes = seconds/60
+            var minutesStr = if (minutes<10) "0$minutes" else minutes.toString()
+            val secondsInt = seconds%60
+            var secondsStr = if(secondsInt<10) "0$secondsInt" else secondsInt.toString()
+            "$minutesStr:$secondsStr"
+        }
+    }
+
+    private fun setupWinRes(){
+        binding.tvTopHeader1.text = requireContext().getString(R.string.lvl)
+        binding.tvTopHeader2.text = requireContext().getString(R.string.complete)
+    }
+
+    private fun setupLoseRes(){
+        binding.tvTopHeader1.text = requireContext().getString(R.string.you)
+        binding.tvTopHeader2.text = requireContext().getString(R.string.lose)
+    }
+
     companion object {
         @JvmStatic
         fun newInstance(gameTime: Int, gameResult: Int) =

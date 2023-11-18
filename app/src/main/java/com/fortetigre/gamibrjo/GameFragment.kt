@@ -65,7 +65,6 @@ class GameFragment : Fragment() {
             launchTimer()
         }
         observeBalance()
-        launchTimer()
         setupBtnBackClickListener()
     }
 
@@ -78,8 +77,8 @@ class GameFragment : Fragment() {
                     delay(1000)
                     counter++
                     progress.setProgress(counter, true)
+                    if (counter==30) launchResult()
                 }
-                launchResult()
             }
         }else{
             progress.visibility = View.GONE
@@ -96,10 +95,18 @@ class GameFragment : Fragment() {
             endBalance = balanceDao.getCurrentBalanceValue()
         }
         val gameResult = endBalance - startBalance
+        val gameResultFragment = GameResultFragment.newInstance(gameTimeInSeconds, gameResult)
+        parentFragmentManager.beginTransaction().apply {
+            replace(R.id.mainContainer, gameResultFragment)
+            addToBackStack(null)
+            commit()
+        }
     }
 
     private fun setupBtnBackClickListener(){
-        launchResult()
+        binding.btnBack.setOnClickListener {
+            launchResult()
+        }
     }
 
     private fun observeBalance() {
