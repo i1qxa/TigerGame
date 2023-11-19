@@ -5,14 +5,13 @@ import android.graphics.LinearGradient
 import android.graphics.Shader
 import android.icu.util.Calendar
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.fortetigre.gamibrjo.data.CommonInfo
-import com.fortetigre.gamibrjo.data.Time
 import com.fortetigre.gamibrjo.data.db.AppDatabase
 import com.fortetigre.gamibrjo.data.db.BalanceDB
 import com.fortetigre.gamibrjo.databinding.FragmentGameBinding
@@ -26,12 +25,6 @@ class GameFragment : Fragment() {
 
     private val binding by lazy { FragmentGameBinding.inflate(layoutInflater) }
 
-    //    private val xStart by lazy { binding.topLine.x }
-//    private val xEnd by lazy { xStart + (binding.mainBackground.width).toFloat() }
-//    private val yStart by lazy { binding.topLine.y }
-//    private val yEnd by lazy { binding.bottomLine.y }
-//    private val xFailure by lazy { ((binding.bottomChest).width / 2).toFloat() }
-//    private val yFailure by lazy { binding.bottomChest.y + binding.bottomChest.height }
     private var isAnimationActive = false
     private val chestDao by lazy {
         AppDatabase.getInstance(requireActivity().application).ChestDao()
@@ -43,7 +36,7 @@ class GameFragment : Fragment() {
     private var isCrystalAttached = false
     private val progress by lazy { binding.progressBar }
     private var crystalId = 0
-    private var startTime: Time = Time(1, 1)
+    private var startTime: Long = 0
     private var startBalance = 0
 
 
@@ -61,8 +54,7 @@ class GameFragment : Fragment() {
             startBalance = balanceDao.getCurrentBalanceValue()
             delay(1000)
             createCrystalView()
-            val startCalendar = Calendar.getInstance()
-            startTime = Time(startCalendar.time.minutes, startCalendar.time.seconds)
+            startTime = Calendar.getInstance().timeInMillis
             launchTimer()
         }
         observeBalance()
@@ -91,14 +83,10 @@ class GameFragment : Fragment() {
     }
 
     private fun launchResult() {
-        val endCalendar = Calendar.getInstance()
-        val endTime = Time(endCalendar.time.minutes, endCalendar.time.seconds)
-        val gameDuration = Time(
-            (endTime.minutes - startTime.minutes),
-            (endTime.seconds - startTime.seconds)
-        ).getString()
+        val endTime = Calendar.getInstance().timeInMillis
+        val gameDuration = milsInTime(((endTime - startTime)/1000).toInt())
         lifecycleScope.launch {
-            var endBalance = balanceDao.getCurrentBalanceValue()
+            val endBalance = balanceDao.getCurrentBalanceValue()
             withContext(Dispatchers.Main) {
                 val gameResult = endBalance - startBalance
                 val gameResultFragment = GameResultFragment.newInstance(gameDuration, gameResult)
@@ -110,6 +98,17 @@ class GameFragment : Fragment() {
             }
         }
 
+    }
+
+    private fun milsInTime(seconds:Int):String{
+        val minutesInt = seconds/60
+        val secondsInt = seconds%60
+        val answer = StringBuilder()
+        if (minutesInt<10) answer.append("0")
+        answer.append("${minutesInt}:")
+        if (seconds<10)answer.append("0")
+        answer.append(secondsInt)
+        return answer.toString()
     }
 
     private fun setupBtnBackClickListener() {

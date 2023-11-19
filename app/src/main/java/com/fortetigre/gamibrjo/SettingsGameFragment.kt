@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.fortetigre.gamibrjo.data.CommonInfo
+import com.fortetigre.gamibrjo.data.PrivacyFragment
 import com.fortetigre.gamibrjo.data.Settings
 import com.fortetigre.gamibrjo.data.db.AppDatabase
 import com.fortetigre.gamibrjo.databinding.FragmentSettingsGameBinding
@@ -46,6 +47,13 @@ class SettingsGameFragment : Fragment() {
             commonInfo.changeSettings(settings)
             parentFragmentManager.popBackStack()
         }
+        binding.btnPolicy.setOnClickListener {
+            parentFragmentManager.beginTransaction().apply {
+                replace(R.id.mainContainer, PrivacyFragment())
+                addToBackStack(null)
+                commit()
+            }
+        }
     }
 
     private fun observeBalance(){
@@ -53,9 +61,6 @@ class SettingsGameFragment : Fragment() {
         balanceDao.getBalanceLD().observe(viewLifecycleOwner){
             tvBalance.text = it.toString()
         }
-//        commonInfo.balanceLD.observe(viewLifecycleOwner){
-//            tvBalance.text = it.toString()
-//        }
     }
 
     private fun makeGradientText(){

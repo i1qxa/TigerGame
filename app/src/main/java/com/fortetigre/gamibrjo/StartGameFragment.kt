@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.fortetigre.gamibrjo.data.CommonInfo
+import com.fortetigre.gamibrjo.data.PrivacyFragment
 import com.fortetigre.gamibrjo.data.db.AppDatabase
 import com.fortetigre.gamibrjo.databinding.FragmentStartGameBinding
 
@@ -47,6 +48,13 @@ class StartGameFragment : Fragment() {
         binding.btnPlay.setOnClickListener {
             parentFragmentManager.beginTransaction().apply {
                 replace(R.id.mainContainer, GameFragment())
+                addToBackStack(null)
+                commit()
+            }
+        }
+        binding.btnPolicy.setOnClickListener {
+            parentFragmentManager.beginTransaction().apply {
+                replace(R.id.mainContainer, PrivacyFragment())
                 addToBackStack(null)
                 commit()
             }
